@@ -1,17 +1,24 @@
 puts "Введите сторону А."
-  a = gets.chomp
+  a = gets.chomp.to_f
 puts "Введите сторону B."
-  b = gets.chomp
+  b = gets.chomp.to_f
 puts "Введите сторону C."
-  c = gets.chomp
+  c = gets.chomp.to_f
 
+arr = []
+arr.push(a, b, c).sort!
 
-if (a.to_i ** 2) +  (b.to_i ** 2) == c.to_i ** 2
-  puts "Треугольник является прямоугольным."
-elsif a.to_i == b.to_i && b.to_i == c.to_i && a.to_i == c.to_i
+if arr[0] == arr[1] && arr[1] == arr[2] && arr[2] == arr[0] 
   puts "Треугольник равносторонний и равнобедренный, но не прямоугольный."
-elsif a.to_i == b.to_i || b.to_i == c.to_i || a.to_i == c.to_i  
-  puts "Треугольник равнобедренный."
-else
-  puts "Обычный такой треугольник."  
-end
+elsif arr[0]**2 + arr[1]**2 == arr[2]**2 
+  puts "Треугольник является прямоугольным."
+elsif (arr[0]**2 + arr[1]**2 == arr[2]**2) && (arr[0] == arr[1] || arr[1] == arr[2] || arr[0] == arr[2]) 
+  puts "Треугольник является прямоугольным и равнобедренным."  
+elsif arr[0] == arr[1] || arr[1] == arr[2] || arr[0] == arr[2]
+  puts puts "Треугольник равнобедренный."
+else 
+  puts "Обычный треугольник."  
+end  
+
+
+
