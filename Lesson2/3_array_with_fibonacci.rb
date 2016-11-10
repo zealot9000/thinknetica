@@ -1,12 +1,7 @@
-arr =[]
-count = 0
-a = 0
-b = 1
+arr =[0, 1]
+
 for i in (2..100) 
-    c = a + b
-    a, b = b, c
-    count += 1
-    arr << b
+    arr << arr[-1] + arr[-2]
 end 
 
 puts arr

@@ -1,26 +1,33 @@
 hash = {}
-
-purchase = 0
+sum = 0
+total = 0
 
 loop do 
   puts "Enter the product name or stop for exit: "
     purchase = gets.chomp.to_s
   
   break if purchase == "stop"
+  if hash.include?(purchase) == true
+    puts "Purchase already presence! Please new enter: "
+    redo
+  end   
+
     
   puts "Enter the price of the goods: "
     price = gets.chomp.to_f
   puts "Enter the quantity of the goods"    
     quantity = gets.chomp.to_f
 
+  if hash.include?(purchase) == true
+    hash[purchase] = hash[purchase + "a"] 
+  end
+    
   hash[purchase] = {price: price, quantity: quantity}
-
-  arr = []
-
-  hash.each {|k, v| puts "Price of #{k}: #{v[:price]*v[:quantity]}" && arr << v[:price]*v[:quantity]}
   
-  puts hash
-  puts "Total price: #{arr.reduce(:+)}"
-
+  sum = price * quantity  
+  total += sum
 end  
+
+puts hash
+puts "Total price: #{total}"
 

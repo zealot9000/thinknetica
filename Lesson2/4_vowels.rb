@@ -1,10 +1,10 @@
-alphabet = ("a".."z").to_a
+alphabet = ("a".."z")
 
-hash = Hash[alphabet.map.with_index.to_a]
+hash = {}
 
-hash.each {|key, value| hash[key] = value + 1 }
-
-hash.delete_if {|key, value| key =~ /\A[^aeiou]/}
+alphabet.each_with_index do |key, index|
+  hash[key] = index + 1 if %w(a e o u i).include?(key)
+end
 
 puts hash
 
