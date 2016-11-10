@@ -11,16 +11,11 @@ loop do
     puts "Purchase already presence! Please new enter: "
     redo
   end   
-
     
   puts "Enter the price of the goods: "
     price = gets.chomp.to_f
   puts "Enter the quantity of the goods"    
     quantity = gets.chomp.to_f
-
-  if hash.include?(purchase) == true
-    hash[purchase] = hash[purchase + "a"] 
-  end
     
   hash[purchase] = {price: price, quantity: quantity}
   
