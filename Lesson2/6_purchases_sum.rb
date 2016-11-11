@@ -14,7 +14,7 @@ loop do
     
   puts "Enter the price of the goods: "
     price = gets.chomp.to_f
-  puts "Enter the quantity of the goods"    
+  puts "Enter the quantity of the goods: "    
     quantity = gets.chomp.to_f
     
   hash[purchase] = {price: price, quantity: quantity}
