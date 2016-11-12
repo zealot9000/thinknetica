@@ -1,8 +1,9 @@
-arr =[0, 1]
+arr = [0, 1]
 
-for i in (2..100) 
-    arr << arr[-1] + arr[-2]
-    break if arr.last > 100
+loop do
+    next_fib = arr[-1] + arr[-2]
+    break if next_fib > 100
+    arr.push(next_fib)
 end 
 
 puts arr

@@ -7,7 +7,7 @@ loop do
     purchase = gets.chomp.to_s
   
   break if purchase == "stop"
-  if hash.include?(purchase) == true
+  if hash[purchase] 
     puts "Purchase already presence! Please new enter: "
     redo
   end   
