@@ -1,6 +1,6 @@
 class Station
 
-  attr_accessor :name, :trains, :station
+  attr_accessor :name, :trains 
 
   def initialize(name)
     @name = name
@@ -21,7 +21,7 @@ class Station
 
   def take_a_train(train)
     @trains << train
-  end
+  end 
 
   def send_train(train)
     train = @trains.pop {|x| x.number == train.number}
@@ -31,7 +31,7 @@ end
 
 class Route
 
- attr_accessor :route, :first_station, :last_station
+ attr_accessor :first_station, :last_station, :route
 
   def initialize(first_station, last_station)
     @route = [first_station, last_station]
@@ -47,16 +47,23 @@ class Route
     @route.delete(station)
   end 
 
-  def route_station(station)
-    @route[station]
+  def station_list
+    @route
   end  
 
+  def route_station(station)
+    @route[station]
+  end
+
+  def index
+    @route.index
+  end  
 end  
 
 
 class Train
 
-  attr_accessor :number, :type, :wagons, :speed, :set_route, :station_number, :go
+  attr_accessor :number, :type, :wagons, :speed, :set_route, :current_station, :moving_to_the_next_station
 
   def initialize(type, wagons = 1, speed = 0)
     @number = rand(1..50)
@@ -90,19 +97,45 @@ class Train
     end  
   end 
 
+  def route
+    @route 
+  end  
+
   def set_route(route)
     @route = route
   end
 
-  def go  
+  def current_station
+    @current_station = @route.route_station(@station_number) 
+  end  
+
+  def previous_station
+    if @station_number != 0
+      @current_station = @route.route_station(@station_number - 1) 
+    else
+      puts "The train to the first station."
+    end    
+  end  
+
+  def next_station
+    if @station_number + 1 != nil
+      @current_station = @route.route_station(@station_number + 1)
+    else
+      puts "End station."
+    end    
+  end  
+
+  def moving_to_the_next_station(station)  
     self.speed_up if @speed.zero?
-    puts self.speed
-    current_station = @route.route_station(@station_number)
-    @station.take_a_train(self)
+    puts "Speed: #{self.speed}"
 
-    # @station_number += 1
+    @station_number += 1
 
-    # next_station = @route.route_station(@station_number)
-    # next_station.take_a_train(self)
+    @current_station = @route.station_list.index(@station_number)
+
+    puts "The train arrived at the station: #{self.current_station}"
+    
+    station.take_a_train(self)
+
   end  
 end
