@@ -18,13 +18,14 @@ class Station
   end
 
   def take_a_train(train)
-    if train.type == "cargo"
-      @trains[:cargo] << train
-    elsif train.type == "pass"
-      @trains[:pass] << train
-    else 
-       puts "Unknown type of train."   
-    end      
+    # if train.type == "cargo"
+    #   @trains[:cargo] << train
+    # elsif train.type == "pass"
+    #   @trains[:pass] << train
+    # else 
+    @trains[train.type.to_sym].push(train)
+    #    puts "Unknown type of train."   
+    # end      
   end 
 
   def send_train(train)
@@ -56,6 +57,14 @@ class Route
   def route_station(station_index)
     @route[station_index]
   end  
+
+  def last_station
+    @route.last
+  end  
+  
+  def station_index(station)
+    @route.index(station.name)
+  end  
 end  
 
 
@@ -74,11 +83,11 @@ class Train
     self.speed_up(80) if @speed.zero?
     puts "Speed: #{self.speed}"
 
-    @train_index = @route.route.index(station_to.name)
+    @station_index = @route.station_index(station_to)
 
     puts "The train arrived at the station: #{self.current_station}"
     
-    if @current_station != @route.route.last
+    if @current_station != @route.last_station
       station_to.take_a_train(self) 
     else
       puts "The train at the last station." 
@@ -92,15 +101,15 @@ class Train
   end 
 
   def current_station
-    @route.route_station(@train_index)
+    @route.route_station(@station_index)
   end  
 
   def previous_station
-      @route.route_station(@train_index - 1) 
+      @route.route_station(@station_index - 1) 
   end  
 
   def next_station
-       @route.route_station(@train_index + 1)  
+       @route.route_station(@station_index + 1)  
   end 
 
   def set_route(route)
@@ -108,12 +117,11 @@ class Train
   end
 
   def speed_up(speed)
-    if speed < 100
+    if speed < 0 
+      puts "Error. The speed is a negative value."
+    elsif  speed < 100 
       @speed = speed
-      puts "Speed: #{@speed}"
-    elsif speed == 0 
-      @speed == 0
-      puts "The train stopped."  
+      puts "Speed: #{@speed}" 
     else
       puts "The train can not go so fast!"
     end    
