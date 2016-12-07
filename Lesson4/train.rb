@@ -1,12 +1,11 @@
 class Train
 
-  attr_accessor :number, :type, :wagons, :speed, :set_route, :moving_to_the_next_station, :route
+  attr_accessor :number, :type, :speed, :set_route, :moving_to_the_next_station, :route, :carriages # :carriage_type, 
 
-  def initialize(type, wagons = 1, speed = 0)
+  def initialize
     @number = rand(1..50)
-    @type = type
-    @wagons = wagons
-    @speed = speed
+    @speed = 0
+    @carriages = []
   end
 
   def moving_to_the_next_station(station_from, station_to)  
@@ -35,11 +34,11 @@ class Train
   end  
 
   def previous_station
-      @route.route_station(@station_index - 1) 
+    @route.route_station(@station_index - 1) 
   end  
 
   def next_station
-       @route.route_station(@station_index + 1)  
+    @route.route_station(@station_index + 1)  
   end 
 
   def set_route(route)
@@ -62,19 +61,46 @@ class Train
     puts "The train stopped." 
   end  
 
-  def add_wagon
-    if @speed.zero?
-      @wagons += 1
+  def add_carriage(carriage)
+    if carriage.type == self.type
+      @carriages.push(carriage)
     else
-      puts "It's impossible. The train moves."
-    end
-  end
+      puts "It's impossible. The train moves or train type does not match the type of the carriage"
+    end    
+  end  
 
-  def del_wagon
-    if @speed.zero? && @wagons > 0 
-      @wagons -= 1 
+  def del_carriage(carriage)
+    if @speed.zero? && @carriages.count > 0 
+      @carriages.delete(carriage)
     else  
       puts "It's impossible. The train is moving or wagons left."
     end  
   end  
 end
+
+class PassengerTrain < Train
+  
+  def initialize
+    super
+    @type = :passenger
+  end  
+  
+end
+
+class CargoTrain < Train
+
+  def initialize
+    super
+    @type = :cargo
+  end  
+
+end  
+
+
+
+
+
+
+
+
+

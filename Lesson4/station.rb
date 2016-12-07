@@ -24,4 +24,5 @@ class Station
   def send_train(train)
     @trains[train.type.to_sym].delete(train)
   end  
+  
 end 

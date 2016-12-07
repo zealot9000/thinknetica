@@ -1,6 +1,7 @@
 require_relative 'station'
 require_relative 'train'
 require_relative 'route'
+require_relative 'carriage'
 
 
 
@@ -13,8 +14,8 @@ station2 = Station.new('kapustka')
 station3 = Station.new('tipsi')
 station4 = Station.new('batut')
 train1.set_route(route1)
-# train1.route
-# train1.route.station_list
+train1.route
+train1.route.station_list
 train1.moving_to_the_next_station(station1, station2)
 station1.trains
 
