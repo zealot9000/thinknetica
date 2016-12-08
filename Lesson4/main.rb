@@ -14,7 +14,6 @@ class Main
   end
 
   def menu
-   
     loop do	
 				puts "
 						Select an action:
@@ -37,13 +36,13 @@ class Main
 			when 2
 				create_train
 			when 3
-				attache_carriage
+				attach_carriage
 			when 4
-				
+				detach_carriage
 			when 5
-				
+				send_train
 			when 6
-				
+				stations_list
 			when 7
 				trains_list
 			when 8
@@ -52,16 +51,13 @@ class Main
 				puts "Select the number action."
 			end
 		end
-		
 	end	
 	
 	def create_station
-		
-		puts "Enter the name of the station: "
+				puts "Enter the name of the station: "
 		station = gets.chomp
 		@stations << Station.new(station)
 		puts "Station #{station} created"
-		
 	end	 
 	
 	def create_train
@@ -85,15 +81,16 @@ class Main
 	end	
 	
   def  attach_carriage
-  	
 		if @trains.size > 0
       puts "Choose train to attach: "
       index = 0
       @trains.each do |value|
-        index +=1
+        index += 1
         puts "#{index}. #{value.type} - №#{value.number}"
       end
+      
       choice = gets.chomp.to_i
+      
       if choice <= @trains.size
         @trains[choice-1].add_carriage(PassengerCarriage.new) if @trains[choice-1].type == "passenger"
         @trains[choice-1].add_carriage(CargoCarriage.new) if @trains[choice-1].type == "cargo"
@@ -104,13 +101,45 @@ class Main
     else
       puts "Create any train at first"
     end 
-    
+  end	
+  
+  def detach_carriage
+  	if @trains.size > 0
+  		puts "Choose train to detach: "
+  		index = 0
+  		@trains.each do |value|
+  			index += 1
+  			puts "#{index}. #{value.type} - №#{value.number}"
+    end
+      
+    choice = gets.chomp.to_i
+       
+    if choice <= @trains.size
+      @trains[choice-1].del_carriage
+        puts "Carriage detached" 
+    end
+  end
+       
+       
+  end	
+  
+  def send_train
+  end	
+  
+  def stations_list
+  	if @stations.size > 0
+  		@stations.each {|value| puts "Station: #{value.name}"}
+  	else
+  		puts "No stations."
+  	end	
   end	
   
   def trains_list
-  	
-  	@trains.each { |value| puts "Train: #{value.number}, type: #{value.type}" }
-  	
+  	if @trains.size > 0
+	  	@trains.each {|value| puts "Train: #{value.number}, type: #{value.type}"}
+		else
+			puts "No trains."
+		end	
   end	
 
 end					

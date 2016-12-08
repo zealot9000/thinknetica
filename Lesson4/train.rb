@@ -70,9 +70,10 @@ class Train
     end    
   end  
 
-  def del_carriage(carriage)
+  def del_carriage
     if @speed.zero? && @carriages.count > 0 
-      @carriages.delete(carriage)
+      @carriages.pop
+      puts "Carriage  detached"
     else  
       puts "It's impossible. The train is moving or wagons left."
     end  
