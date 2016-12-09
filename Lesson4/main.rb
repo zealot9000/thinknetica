@@ -124,11 +124,47 @@ class Main
   end	
   
   def send_train
+  	if @trains.size > 0
+  		puts "Choose train to detach: "
+  		index = 0
+  		@trains.each do |value|
+  			index += 1
+  			puts "#{index}. #{value.type} - №#{value.number}"
+    end
+      
+    choice = gets.chomp.to_i
+    
+      if choice <= @trains.size
+      	if @stations.size > 0
+	        puts "Choose station: "
+	        index = 0
+	        @stations.each do |value|
+	          index +=1
+	          puts "#{index}. #{value.name}"
+        end
+        
+          choice2 = gets.chomp.to_i
+          
+          if choice2 <= @stations.size
+            @stations[choice2-1].take_a_train(@trains[choice-1])
+            puts "Train move to the station"
+	          else
+	            puts "No such station"
+	        end
+	        else
+	          puts "Create a station!"
+	        end
+	      else
+	        puts "No such train"
+	      end
+	    else
+      puts "Create a train."
+    end
   end	
   
   def stations_list
   	if @stations.size > 0
-  		@stations.each {|value| puts "Station: #{value.name}"}
+  		@stations.each {|value| puts "Station: #{value.name}. Trains: #{value.trains_type}"}
   	else
   		puts "No stations."
   	end	
@@ -148,23 +184,3 @@ end
 main = Main.new
 main.menu
 
-# train1 = Train.new('cargo')
-# route1 = Route.new('batat', 'batut')
-# route1.add_station('kapustka')
-# route1.add_station('tipsi')
-# station1 = Station.new('batat')
-# station2 = Station.new('kapustka')
-# station3 = Station.new('tipsi')
-# station4 = Station.new('batut')
-# train1.set_route(route1)
-# train1.route
-# train1.route.station_list
-# train1.moving_to_the_next_station(station1, station2)
-# station1.trains
-
-
-# station1.trains
-# station2.trains
-# station3.trains
-
-# train1.current_station
