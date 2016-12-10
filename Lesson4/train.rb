@@ -8,6 +8,10 @@ class Train
     @carriages = []
   end
 
+  def to_s
+    "Train type: #{@type}, number: #{@number}" 
+  end  
+
   def moving_to_the_next_station(station_from, station_to)  
     self.speed_up(80) if @speed.zero?
     puts "Speed: #{self.speed}"

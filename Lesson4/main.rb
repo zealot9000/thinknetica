@@ -21,41 +21,41 @@ class Main
 
   def menu
     loop do	
-				puts "
-						Select an action:
-						
-						1. Create station.
-						2. Create train.
-						3. Attach carriage to the train.
-						4. Detach carriage of the train.
-						5. Put the train station.
-						6. View a list of stations.
-						7. View a list of trains.
-						8. Quit the program.
-						"
-			choice = gets.chomp.to_i
+			puts "
+					Select an action:
+				
+					1. Create station.
+					2. Create train.
+					3. Attach carriage to the train.
+					4. Detach carriage of the train.
+					5. Put the train station.
+					6. View a list of stations.
+					7. View a list of trains.
+					8. Quit the program.
+					"
+		choice = gets.chomp.to_i
 			
-		case choice 		
-    when 1
-  		create_station
-  	when 2
-			create_train
-  	when 3
-  		attach_carriage
-  	when 4
-			detach_carriage
-  	when 5
-  		send_train
-  	when 6
-  		stations_list
-  	when 7
-  		trains_list
-  	when 8
-  		exit
-  	else
-  		puts "Select the number action."
-		end
-	end
+		  case choice 		
+      when 1
+    		create_station
+    	when 2
+  			create_train
+    	when 3
+    		attach_carriage
+    	when 4
+  			detach_carriage
+    	when 5
+    		send_train
+    	when 6
+    		stations_list
+    	when 7
+    		trains_list
+    	when 8
+    		exit
+    	else
+    		puts "Select the number action."
+		  end
+    end  
   end	
 		
 private
@@ -64,7 +64,7 @@ private
 		if @trains.size > 0
       puts "Choose train to attach: "
         
-      @trains.each_with_index {|train, index| puts "#{index + 1}. #{train.type} - №#{train.number}"}
+      @trains.each_with_index { |train, index| puts "#{index + 1}. #{train}" }
 
       choice = gets.chomp.to_i
       
@@ -84,8 +84,10 @@ private
   def detach_carriage
   	if @trains.size > 0
   		puts "Choose train to detach: "
-      @trains.each_with_index {|train, index| puts "#{index + 1}. #{train.type} - №#{train.number}"}
+      
+      @trains.each_with_index { |train, index| puts "#{index + 1}. #{train}" }
     end
+
 
     choice = gets.chomp.to_i
        
@@ -173,8 +175,8 @@ private
     @trains.push(train)
     puts "#{train_type.capitalize} train with number #{train_number} created." 
   end
+end
 
-end 
 
 main = Main.new
 main.menu
