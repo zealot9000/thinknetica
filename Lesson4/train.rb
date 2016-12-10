@@ -1,9 +1,8 @@
 class Train
 
-  attr_accessor :number, :type, :speed, :set_route, :moving_to_the_next_station, :route, :carriages # :carriage_type, 
+  attr_accessor :number, :type, :speed, :set_route, :moving_to_the_next_station, :route, :carriages 
 
   def initialize(number)
-    #@number = rand(1..50)
     @number = number
     @speed = 0
     @carriages = []
@@ -79,30 +78,3 @@ class Train
     end  
   end  
 end
-
-class PassengerTrain < Train
-  
-  def initialize(number)
-    super
-    @type = :passenger
-  end  
-  
-end
-
-class CargoTrain < Train
-
-  def initialize(number)
-    super
-    @type = :cargo
-  end  
-
-end  
-
-
-
-
-
-
-
-
-

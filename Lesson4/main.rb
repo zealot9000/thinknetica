@@ -2,9 +2,15 @@ require_relative 'station'
 require_relative 'train'
 require_relative 'route'
 require_relative 'carriage'
+require_relative 'carriages/cargo_carriage'
+require_relative 'carriages/passenger_carriage'
+require_relative 'trains/cargo_trains'
+require_relative 'trains/passenger_trains'
 
 stations = []
 trains = []
+TRAIN_TYPES = { passenger: PassengerTrain, cargo: CargoTrain }
+CARRIAGE_TYPES = { passenger: PassengerCarriage, cargo: CargoCarriage }
 
 class Main
 		
@@ -30,70 +36,40 @@ class Main
 			choice = gets.chomp.to_i
 			
 			case choice
-			
-			when 1
-				create_station
-			when 2
-				create_train
-			when 3
-				attach_carriage
-			when 4
-				detach_carriage
-			when 5
-				send_train
-			when 6
-				stations_list
-			when 7
-				trains_list
-			when 8
-				exit
-			else
-				puts "Select the number action."
+  			when 1
+  				create_station
+  			when 2
+  				create_train
+  			when 3
+  				attach_carriage
+  			when 4
+  				detach_carriage
+  			when 5
+  				send_train
+  			when 6
+  				stations_list
+  			when 7
+  				trains_list
+  			when 8
+  				exit
+  			else
+  				puts "Select the number action."
 			end
 		end
 	end	
-	
-	def create_station
-				puts "Enter the name of the station: "
-		station = gets.chomp
-		@stations << Station.new(station)
-		puts "Station #{station} created"
-	end	 
-	
-	def create_train
-		puts "What type of train you want to create, passenger or cargo?
-					1. Passenger
-					2. Cargo"
-		train_type = gets.chomp.to_i
 		
-		puts "Enter the train number: "
-		train_number = gets.chomp.to_i
-		
-		if train_type == 1
-			@trains << PassengerTrain.new(train_number)
-			puts "Passenger train with number #{train_number} created."
-		elsif train_type == 2
-			@trains << CargoTrain.new(train_number)
-			puts "Cargo train with number #{train_number} created."
-		else
-			puts "Wrong type of train!"
-		end	
-	end	
-	
   def  attach_carriage
 		if @trains.size > 0
       puts "Choose train to attach: "
-      index = 0
-      @trains.each do |value|
-        index += 1
-        puts "#{index}. #{value.type} - №#{value.number}"
-      end
-      
+        
+      @trains.each_with_index {|train, index| puts "#{index + 1}. #{train.type} - №#{train.number}"}
+
       choice = gets.chomp.to_i
       
       if choice <= @trains.size
-        @trains[choice-1].add_carriage(PassengerCarriage.new) if @trains[choice-1].type == "passenger"
-        @trains[choice-1].add_carriage(CargoCarriage.new) if @trains[choice-1].type == "cargo"
+
+        @trains[choice-1].add_carriage(CARRIAGE_TYPES[@trains[choice-1].type].new)
+
         puts "Carriage attached"
       else
         puts "Error. No such train"
@@ -106,12 +82,9 @@ class Main
   def detach_carriage
   	if @trains.size > 0
   		puts "Choose train to detach: "
-  		index = 0
-  		@trains.each do |value|
-  			index += 1
-  			puts "#{index}. #{value.type} - №#{value.number}"
+      @trains.each_with_index {|train, index| puts "#{index + 1}. #{train.type} - №#{train.number}"}
     end
-      
+
     choice = gets.chomp.to_i
        
     if choice <= @trains.size
@@ -119,10 +92,7 @@ class Main
         puts "Carriage detached" 
     end
   end
-       
-       
-  end	
-  
+
   def send_train
   	if @trains.size > 0
   		puts "Choose train to detach: "
@@ -130,36 +100,32 @@ class Main
   		@trains.each do |value|
   			index += 1
   			puts "#{index}. #{value.type} - №#{value.number}"
+      end  
+    else
+      puts "Create a train."  
     end
       
-    choice = gets.chomp.to_i
+    train_index = gets.chomp.to_i
     
-      if choice <= @trains.size
-      	if @stations.size > 0
-	        puts "Choose station: "
-	        index = 0
-	        @stations.each do |value|
-	          index +=1
-	          puts "#{index}. #{value.name}"
-        end
-        
-          choice2 = gets.chomp.to_i
-          
-          if choice2 <= @stations.size
-            @stations[choice2-1].take_a_train(@trains[choice-1])
-            puts "Train move to the station"
-	          else
-	            puts "No such station"
-	        end
-	        else
-	          puts "Create a station!"
-	        end
-	      else
-	        puts "No such train"
-	      end
-	    else
-      puts "Create a train."
+    if @stations.size > 0
+	    puts "Choose station: "
+      index = 0
+	    @stations.each do |value|
+	      index +=1
+	      puts "#{index}. #{value.name}"
+      end  
+    else
+      puts "Create a station!"    
     end
+
+    station_index = gets.chomp.to_i
+          
+    if station_index <= @stations.size
+      @stations[station_index-1].take_a_train(@trains[station_index-1])
+      puts "Train move to the station"
+	  else
+	    puts "No such station"
+	  end
   end	
   
   def stations_list
@@ -178,8 +144,37 @@ class Main
 		end	
   end	
 
-end					
+private
 
+  def create_station
+        puts "Enter the name of the station: "
+    station = gets.chomp
+    @stations << Station.new(station)
+    puts "Station #{station} created"
+  end  
+  
+  def create_train
+    puts "What type of train you want to create, passenger or cargo?
+          1. Passenger
+          2. Cargo"
+    choice = gets.chomp.to_i
+
+    case choice
+      when 1
+        train_type = :passenger
+      when 2
+        train_type = :cargo
+    end     
+
+    puts "Enter the train number: "
+    train_number = gets.chomp.to_i
+    
+    train = TRAIN_TYPES[train_type.to_sym].new(train_number)
+    @trains.push(train)
+    puts "#{train_type.capitalize} train with number #{train_number} created." 
+  end
+
+end 
 
 main = Main.new
 main.menu

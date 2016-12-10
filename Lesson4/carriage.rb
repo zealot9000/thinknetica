@@ -1,29 +1,15 @@
 class Carriage
-	
-	def initialize(type)
-		@type = type
-	end  
+  
+attr_reader :type
 
-	def type
-		@type
-	end  
+  def initialize(type)
+    @type = type
+  end   
 
 end  
 
-class PassengerCarriage < Carriage
-	
-	def initialize  
-		super(:passenger)
-	end  
 
-end
 
-class CargoCarriage < Carriage
-	
-	def initialize  
-		super(:cargo)
-	end  
-	
-end	
 
-	
+
+  
