@@ -35,29 +35,31 @@ class Main
 						"
 			choice = gets.chomp.to_i
 			
-			case choice
-  			when 1
-  				create_station
-  			when 2
-  				create_train
-  			when 3
-  				attach_carriage
-  			when 4
-  				detach_carriage
-  			when 5
-  				send_train
-  			when 6
-  				stations_list
-  			when 7
-  				trains_list
-  			when 8
-  				exit
-  			else
-  				puts "Select the number action."
-			end
+		case choice 		
+    when 1
+  		create_station
+  	when 2
+			create_train
+  	when 3
+  		attach_carriage
+  	when 4
+			detach_carriage
+  	when 5
+  		send_train
+  	when 6
+  		stations_list
+  	when 7
+  		trains_list
+  	when 8
+  		exit
+  	else
+  		puts "Select the number action."
 		end
-	end	
+	end
+  end	
 		
+private
+
   def  attach_carriage
 		if @trains.size > 0
       puts "Choose train to attach: "
@@ -144,8 +146,6 @@ class Main
 		end	
   end	
 
-private
-
   def create_station
         puts "Enter the name of the station: "
     station = gets.chomp
@@ -159,11 +159,11 @@ private
           2. Cargo"
     choice = gets.chomp.to_i
 
-    case choice
+    train_type = case choice
       when 1
-        train_type = :passenger
+        :passenger
       when 2
-        train_type = :cargo
+        :cargo
     end     
 
     puts "Enter the train number: "
