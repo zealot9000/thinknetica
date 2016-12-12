@@ -6,6 +6,7 @@ require_relative 'carriages/cargo_carriage'
 require_relative 'carriages/passenger_carriage'
 require_relative 'trains/cargo_trains'
 require_relative 'trains/passenger_trains'
+require_relative 'modules'
 
 stations = []
 trains = []
