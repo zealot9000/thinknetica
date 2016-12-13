@@ -1,19 +1,16 @@
 require_relative 'modules'
 
 class Station
-  
   include InstanceCounter
   
   attr_accessor :name, :list_trains 
 
   @@station_list = []
- # @@instances = 0
 
   def initialize(name)
     @name = name
     @list_trains = []
     @@station_list << self
-    register_instance
   end  
  
   def trains_type
@@ -32,10 +29,6 @@ class Station
     @@station_list
   end  
   
-  # def self.instances
-  #   @@instances
-  # end 
-
 end 
 
 
