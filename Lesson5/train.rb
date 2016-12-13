@@ -1,7 +1,10 @@
-require_relative 'modules'
+require_relative 'modules/instancecounter'
+require_relative 'modules/company'
 
 class Train
-  include Company 
+  include InstanceCounter
+  include Company
+
   attr_accessor :number, :type, :speed, :set_route, :moving_to_the_next_station, :route, :carriages, :company
 
   @@trains_list = {}
@@ -11,6 +14,7 @@ class Train
     @speed = 0
     @carriages = []
     @@trains_list[number] = self
+    register_instance
   end
 
   def to_s
