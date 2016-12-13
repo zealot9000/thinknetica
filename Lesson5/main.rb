@@ -10,11 +10,12 @@ require_relative 'modules'
 
 stations = []
 trains = []
+
 TRAIN_TYPES = { passenger: PassengerTrain, cargo: CargoTrain }
 CARRIAGE_TYPES = { passenger: PassengerCarriage, cargo: CargoCarriage }
 
 class Main
-		
+    
   def initialize
     @stations = []
     @trains = []
@@ -22,47 +23,47 @@ class Main
 
   def menu
     loop do	
-			puts "
-					Select an action:
-				
-					1. Create station.
-					2. Create train.
-					3. Attach carriage to the train.
-					4. Detach carriage of the train.
-					5. Put the train station.
-					6. View a list of stations.
-					7. View a list of trains.
-					8. Quit the program.
-					"
-		choice = gets.chomp.to_i
-			
-		  case choice 		
+      puts "
+        Select an action:
+        
+        1. Create station.
+        2. Create train.
+        3. Attach carriage to the train.
+        4. Detach carriage of the train.
+        5. Put the train station.
+        6. View a list of stations.
+        7. View a list of trains.
+        8. Quit the program.
+        "
+    choice = gets.chomp.to_i
+      
+      case choice 		
       when 1
-    		create_station
-    	when 2
-  			create_train
-    	when 3
-    		attach_carriage
-    	when 4
-  			detach_carriage
-    	when 5
-    		send_train
-    	when 6
-    		stations_list
-    	when 7
-    		trains_list
-    	when 8
-    		exit
-    	else
-    		puts "Select the number action."
-		  end
+        create_station
+      when 2
+        create_train
+      when 3
+        attach_carriage
+      when 4
+        detach_carriage
+      when 5
+        send_train
+      when 6
+        stations_list
+      when 7
+        trains_list
+      when 8
+        exit
+      else
+        puts "Select the number action."
+      end
     end  
   end	
-		
+    
 private
 
   def  attach_carriage
-		if @trains.size > 0
+    if @trains.size > 0
       puts "Choose train to attach: "
         
       @trains.each_with_index { |train, index| puts "#{index + 1}. #{train}" }
@@ -83,8 +84,8 @@ private
   end	
   
   def detach_carriage
-  	if @trains.size > 0
-  		puts "Choose train to detach: "
+    if @trains.size > 0
+      puts "Choose train to detach: "
       @trains.each_with_index { |train, index| puts "#{index + 1}. #{train}" }
     end
 
@@ -98,12 +99,12 @@ private
   end
 
   def send_train
-  	if @trains.size > 0
-  		puts "Choose train to detach: "
-  		index = 0
-  		@trains.each do |value|
-  			index += 1
-  			puts "#{index}. #{value.type} - №#{value.number}"
+    if @trains.size > 0
+      puts "Choose train to detach: "
+      index = 0
+      @trains.each do |value|
+        index += 1
+        puts "#{index}. #{value.type} - №#{value.number}"
       end  
     else
       puts "Create a train."  
@@ -112,11 +113,11 @@ private
     train_index = gets.chomp.to_i
     
     if @stations.size > 0
-	    puts "Choose station: "
+      puts "Choose station: "
       index = 0
-	    @stations.each do |value|
-	      index +=1
-	      puts "#{index}. #{value.name}"
+      @stations.each do |value|
+        index +=1
+        puts "#{index}. #{value.name}"
       end  
     else
       puts "Create a station!"    
@@ -127,25 +128,25 @@ private
     if station_index <= @stations.size
       @stations[station_index-1].take_a_train(@trains[station_index-1])
       puts "Train move to the station"
-	  else
-	    puts "No such station"
-	  end
+    else
+      puts "No such station"
+    end
   end	
   
   def stations_list
-  	if @stations.size > 0
-  		@stations.each {|value| puts "Station: #{value.name}. Trains: #{value.trains_type}"}
-  	else
-  		puts "No stations."
-  	end	
+    if @stations.size > 0
+      @stations.each {|value| puts "Station: #{value.name}. Trains: #{value.trains_type}"}
+    else
+      puts "No stations."
+    end	
   end	
   
   def trains_list
-  	if @trains.size > 0
-	  	@trains.each {|value| puts "Train: #{value.number}, type: #{value.type}"}
-		else
-			puts "No trains."
-		end	
+    if @trains.size > 0
+      @trains.each {|value| puts "Train: #{value.number}, type: #{value.type}"}
+    else
+      puts "No trains."
+    end	
   end	
 
   def create_station
