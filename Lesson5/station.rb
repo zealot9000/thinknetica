@@ -1,4 +1,4 @@
-require_relative 'modules/instancecounter'
+require_relative 'modules/instance_counter'
 
 class Station
   include InstanceCounter

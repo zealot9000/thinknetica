@@ -4,7 +4,6 @@ class Carriage
 
   include Company  
 
-  attr_accessor :company
   attr_reader :type 
 
   def initialize(type)

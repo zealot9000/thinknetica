@@ -1,22 +1,31 @@
-require_relative 'modules/instancecounter'
+require_relative 'modules/instance_counter'
 require_relative 'modules/company'
 
 class Train
   include InstanceCounter
   include Company
 
-  attr_accessor :number, :type, :speed, :set_route, :moving_to_the_next_station, :route, :carriages, :company
+  attr_accessor :number, :type, :speed, :set_route, :moving_to_the_next_station, :route, :carriages
 
   @@trains_list = {}
 
   def initialize(number)
-    @number = number
+    @number = number 
     @speed = 0
     @carriages = []
-    @@trains_list[number] = self
+    add_train_to_train_list
     register_instance
   end
-
+  
+  def add_train_to_train_list
+    if  @@trains_list.key?(number) == true
+      puts "Train with this number already exists."
+    else
+       @@trains_list[number] = self
+    end   
+  end  
+  
+  
   def to_s
     "Train type: #{@type}, number: #{@number}" 
   end  
@@ -94,4 +103,8 @@ class Train
   def self.find(number)
     @@trains_list[number]
   end
+  
+  def self.all
+    @@trains_list
+  end  
 end
