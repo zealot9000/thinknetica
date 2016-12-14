@@ -5,23 +5,22 @@
   end
 
   module ClassMethods
-    attr_reader :instance_count
+    @@instance_count = 0
 
+    def instances
+      @@instance_count
+    end
+      
     private
-    attr_writer :instance_count 
 
-    def count
-      instance_count ||= 0 
-      instance_count += 0 
+    def count 
+      @@instance_count += 1 
     end  
   end
 
   module InstanceMethods
     private
     def register_instance
-      # self.class.instance_count ||= 0 
-      # self.class.instance_count += 1
-
       self.class.send :count
     end
   end     
