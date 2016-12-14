@@ -18,7 +18,7 @@ class Train
   end
   
   def add_train_to_train_list
-    if  @@trains_list.key?(number) == true
+    if  @@trains_list.key?(number) 
       puts "Train with this number already exists."
     else
        @@trains_list[number] = self
