@@ -1,28 +1,24 @@
- module InstanceCounter
+module InstanceCounter
   def self.included(base)
-      base.extend ClassMethods
-      base.include InstanceMethods
+    base.extend ClassMethods
+    base.include InstanceMethods
   end
 
   module ClassMethods
-    @@instance_count = 0
+    attr_reader :instances
 
-    def instances
-      @@instance_count
-    end
-      
-    private
+  private
 
-    def count 
-      @@instance_count += 1 
+    def count
+      @instances ||= 0 
+      @instances += 1
     end  
   end
 
   module InstanceMethods
-    private
+  private
     def register_instance
       self.class.send :count
     end
   end     
 end  
-  
