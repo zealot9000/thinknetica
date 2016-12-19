@@ -6,7 +6,8 @@ require_relative 'carriages/cargo_carriage'
 require_relative 'carriages/passenger_carriage'
 require_relative 'trains/cargo_trains'
 require_relative 'trains/passenger_trains'
-require_relative 'modules'
+require_relative 'modules/company'
+require_relative 'modules/instance_counter'
 
 stations = []
 trains = []
@@ -153,8 +154,12 @@ private
         puts "Enter the name of the station: "
     station = gets.chomp
     @stations << Station.new(station)
-    puts "Station #{station} created"
-  end  
+  rescue RuntimeError => e
+    puts "#{e}"
+    retry
+  ensure
+     puts "station #{station} created"
+  end 
   
   def create_train
     puts "What type of train you want to create, passenger or cargo?
@@ -170,12 +175,15 @@ private
     end     
 
     puts "Enter the train number: "
-    train_number = gets.chomp.to_i
-    
+    train_number = gets.chomp.to_s
     train = TRAIN_TYPES[train_type.to_sym].new(train_number)
     @trains.push(train)
-    puts "#{train_type.capitalize} train with number #{train_number} created." 
+    puts "#{train_type.capitalize} train with number #{train_number} created."
+    rescue RuntimeError => e
+      puts "#{e}"
+      retry
   end
+  
 end
 
 

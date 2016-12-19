@@ -7,7 +7,7 @@ class Train
 
   attr_accessor :number, :type, :speed, :set_route, :moving_to_the_next_station, :route, :carriages
 
-  TRAIN_NUMBER = /^[a-zA-Z0-9]{3}.*\w{2}$/
+  TRAIN_NUMBER = /^[a-zA-Z0-9]{3}.*\w{2}\z/i
 
   @@trains_list = {}
 
@@ -17,16 +17,22 @@ class Train
     @carriages = []
     add_train_to_train_list
     register_instance
+    validate!
   end
   
   def add_train_to_train_list
     if  @@trains_list.key?(number) 
       puts "Train with this number already exists."
     else
-       @@trains_list[number] = self
+      @@trains_list[number] = self
     end   
   end  
   
+  def valid?
+    validate!
+  rescue
+    false  
+  end 
   
   def to_s
     "Train type: #{@type}, number: #{@number}" 
@@ -113,6 +119,6 @@ class Train
 private
 
   def validate!
-    raise
-
+    raise "Train number should be of the form (XXX-XX)" if number !~ TRAIN_NUMBER
+  end
 end
