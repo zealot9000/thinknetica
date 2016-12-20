@@ -154,11 +154,10 @@ private
         puts "Enter the name of the station: "
     station = gets.chomp
     @stations << Station.new(station)
-  rescue RuntimeError => e
-    puts "#{e}"
-    retry
-  ensure
-     puts "station #{station} created"
+       puts "station #{station} created"
+    rescue StandartError => error
+    puts "#{error}"
+    retry   
   end 
   
   def create_train
@@ -179,8 +178,8 @@ private
     train = TRAIN_TYPES[train_type.to_sym].new(train_number)
     @trains.push(train)
     puts "#{train_type.capitalize} train with number #{train_number} created."
-    rescue RuntimeError => e
-      puts "#{e}"
+    rescue RuntimeError => error
+      puts "#{error}"
       retry
   end
   

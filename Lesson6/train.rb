@@ -15,9 +15,9 @@ class Train
     @number = number 
     @speed = 0
     @carriages = []
+    validate!
     add_train_to_train_list
     register_instance
-    validate!
   end
   
   def add_train_to_train_list
