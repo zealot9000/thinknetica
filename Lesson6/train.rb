@@ -1,9 +1,11 @@
 require_relative 'modules/instance_counter'
 require_relative 'modules/company'
+require_relative 'modules/valid'
 
 class Train
   include InstanceCounter
   include Company
+  include Valid
 
   attr_accessor :number, :type, :speed, :set_route, :moving_to_the_next_station, :route, :carriages
 
@@ -27,13 +29,7 @@ class Train
       @@trains_list[number] = self
     end   
   end  
-  
-  def valid?
-    validate!
-  rescue
-    false  
-  end 
-  
+
   def to_s
     "Train type: #{@type}, number: #{@number}" 
   end  
