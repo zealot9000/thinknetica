@@ -96,7 +96,11 @@ class Train
     else
       puts "It's impossible. The train moves or train type does not match the type of the carriage"
     end    
-  end  
+  end 
+
+  def show_carriages
+    @carriages.each { |carriage| puts carriage.type }
+  end 
 
   def del_carriage
     if @speed.zero? && @carriages.count > 0 

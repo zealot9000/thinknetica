@@ -20,6 +20,7 @@ class Main
   def initialize
     @stations = []
     @trains = []
+    @carriages = []
   end
 
   def menu
@@ -29,12 +30,13 @@ class Main
         
         1. Create station.
         2. Create train.
-        3. Attach carriage to the train.
-        4. Detach carriage of the train.
-        5. Put the train station.
-        6. View a list of stations.
-        7. View a list of trains.
-        8. Quit the program.
+        3. Create carriage.
+        4. Attach carriage to the train.
+        5. Detach carriage of the train.
+        6. Put the train station.
+        7. View a list of stations.
+        8. View a list of trains.
+        9. Quit the program.
         "
     choice = gets.chomp.to_i
       
@@ -44,16 +46,18 @@ class Main
       when 2
         create_train
       when 3
-        attach_carriage
+        cargo_carriage
       when 4
-        detach_carriage
+        attach_carriage
       when 5
-        send_train
+        detach_carriage        
       when 6
-        stations_list
+        send_train        
       when 7
-        trains_list
+        stations_list        
       when 8
+        trains_list
+      when 9  
         exit
       else
         puts "Select the number action."
@@ -89,7 +93,6 @@ private
       puts "Choose train to detach: "
       @trains.each_with_index { |train, index| puts "#{index + 1}. #{train}" }
     end
-
 
     choice = gets.chomp.to_i
        
@@ -144,7 +147,7 @@ private
   
   def trains_list
     if @trains.size > 0
-      @trains.each {|value| puts "Train: #{value.number}, type: #{value.type}"}
+      @trains.each {|value| puts "Train: #{value.number}, type: #{value.type}, carriages: #{value.carriages}"}
     else
       puts "No trains."
     end	
@@ -159,6 +162,12 @@ private
     puts "#{error}"
     retry   
   end 
+
+  def create_carriage
+    puts "Select the type of carriage that you want to create: "
+
+
+  end  
   
   def create_train
     puts "What type of train you want to create, passenger or cargo?

@@ -5,9 +5,10 @@ class Carriage
   include Company  
 
   attr_reader :type 
-  attr_accessor :number_of_units
+  attr_accessor :number_of_units, :carriage_number
   
   def initialize(type, number_of_units)
+    @carriage_number = 1 #rand(1..1000)
     @type = type
     @number_of_units = number_of_units
   end 
