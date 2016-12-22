@@ -1,7 +1,8 @@
 class CargoCarriage < Carriage
   
   def initialize  
-    super(:cargo)
+   @type = :cargo
+   @number_of_units = @total_units = 6000
   end  
   
 end 
