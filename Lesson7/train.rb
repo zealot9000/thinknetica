@@ -22,6 +22,9 @@ class Train
     register_instance
   end
   
+  def pass_for_all_carriages(block)
+  end
+  
   def add_train_to_train_list
     if  @@trains_list.key?(number) 
       puts "Train with this number already exists."
