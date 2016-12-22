@@ -16,7 +16,7 @@ class Carriage
     if @number_of_units > 0
       @number_of_units = @number_of_units - 1
     else
-      puts "Seats ended."
+      puts "Units ended."
     end  
   end 
   
