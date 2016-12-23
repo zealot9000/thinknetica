@@ -99,7 +99,7 @@ class Train
   end 
 
   def show_carriages
-    @carriages.each { |carriage| puts carriage.type }
+    @carriages.each { |carriage| puts "Carriage number: #{carriage.carriage_number}, carriage type: #{carriage.type}, number of units in carriage: #{carriage.number_of_units}, number of occuped units: #{carriage.occupied_units}" }
   end 
 
   def del_carriage

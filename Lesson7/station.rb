@@ -47,5 +47,4 @@ protected
     raise "Station Name should be longer than two characters." if name.length < 2
     raise "Station name must consist of letters." if name !~ NAME_FORMAT
   end     
-  
 end 

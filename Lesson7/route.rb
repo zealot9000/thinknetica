@@ -17,5 +17,4 @@ attr_accessor :stations
   def station_list
     @stations
   end  
-
 end 

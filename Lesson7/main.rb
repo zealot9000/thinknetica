@@ -30,13 +30,14 @@ class Main
         
         1. Create station.
         2. Create train.
-        3. Create carriage.
-        4. Attach carriage to the train.
-        5. Detach carriage of the train.
-        6. Put the train station.
-        7. View a list of stations.
-        8. View a list of trains.
-        9. Quit the program.
+        3. Attach carriage to the train.
+        4. Detach carriage of the train.
+        5. Put the train station.
+        6. View a list of stations.
+        7. View a list of trains.
+        8. View a list of carriages.
+        9. Take a seat, or volume in the railway carriage.
+        10. Quit the program.
         "
     choice = gets.chomp.to_i
       
@@ -46,18 +47,20 @@ class Main
       when 2
         create_train
       when 3
-        cargo_carriage
-      when 4
         attach_carriage
+      when 4
+        detach_carriage
       when 5
-        detach_carriage        
-      when 6
         send_train        
-      when 7
+      when 6
         stations_list        
+      when 7
+        trains_list        
       when 8
-        trains_list
-      when 9  
+        carriages_list
+      when 9 
+        take_a_unit
+      when 10  
         exit
       else
         puts "Select the number action."
@@ -66,7 +69,40 @@ class Main
   end	
     
 private
+  
+    def create_station
+        puts "Enter the name of the station: "
+    station = gets.chomp
+    @stations << Station.new(station)
+       puts "station #{station} created"
+    rescue StandartError => error
+    puts "#{error}"
+    retry   
+  end
+  
+  def create_train
+    puts "What type of train you want to create:
+          1. Passenger
+          2. Cargo"
+    choice = gets.chomp.to_i
 
+    train_type = case choice
+      when 1
+        :passenger
+      when 2
+        :cargo
+    end     
+
+    puts "Enter the train number: "
+    train_number = gets.chomp.to_s
+    train = TRAIN_TYPES[train_type.to_sym].new(train_number)
+    @trains.push(train)
+    puts "#{train_type.capitalize} train with number #{train_number} created."
+    rescue RuntimeError => error
+      puts "#{error}"
+      retry
+  end
+  
   def  attach_carriage
     if @trains.size > 0
       puts "Choose train to attach: "
@@ -152,48 +188,63 @@ private
       puts "No trains."
     end	
   end	
-
-  def create_station
-        puts "Enter the name of the station: "
-    station = gets.chomp
-    @stations << Station.new(station)
-       puts "station #{station} created"
-    rescue StandartError => error
-    puts "#{error}"
-    retry   
-  end 
-
-  def create_carriage
-    puts "Select the type of carriage that you want to create: "
-
-
-  end  
   
-  def create_train
-    puts "What type of train you want to create, passenger or cargo?
-          1. Passenger
-          2. Cargo"
-    choice = gets.chomp.to_i
-
-    train_type = case choice
-      when 1
-        :passenger
-      when 2
-        :cargo
-    end     
-
-    puts "Enter the train number: "
-    train_number = gets.chomp.to_s
-    train = TRAIN_TYPES[train_type.to_sym].new(train_number)
-    @trains.push(train)
-    puts "#{train_type.capitalize} train with number #{train_number} created."
-    rescue RuntimeError => error
-      puts "#{error}"
-      retry
+  def carriages_list
+    if @trains.size > 0
+      puts "Choose train to detach: "
+      index = 0
+      @trains.each do |value|
+        index += 1
+        puts "#{index}. #{value.type} - №#{value.number}"
+      end  
+    else
+      puts "Create a train."  
+    end
+    
+    train_index = gets.chomp.to_i
+    
+   if @trains[train_index - 1].carriages.size != 0
+      @trains[train_index - 1].show_carriages
+    else
+      puts "The train has no wagons"
+    end
   end
   
-end
+  def take_a_unit
+    if @trains.size > 0
+      puts "Choose train to detach: "
+      index = 0
+      @trains.each do |value|
+        index += 1
+        puts "#{index}. #{value.type} - №#{value.number}"
+      end  
+    else
+      puts "Create a train."  
+    end
+    
+    train_index = gets.chomp.to_i
+    
+    if @trains[train_index - 1].carriages.size != 0
+      puts "Choose carriage for take a units"
+      index = 0
+      @trains[train_index - 1].carriages.each do |value|
+        index += 1
+        puts "#{index}. №: #{value.carriage_number}, type: #{value.type}, number of free units: #{value.number_of_units}"
+      end   
+    else
+      puts "The train has no wagons"
+    end
 
+    carriage_index = gets.chomp.to_i
+    
+    if  @trains[train_index - 1].carriages[carriage_index - 1].number_of_units} > 0  
+      @trains[train_index - 1].carriages[carriage_index - 1].take_a_unit
+      puts "Ok. The number of free units: #{@trains[train_index - 1].carriages[carriage_index - 1].number_of_units}."
+    else
+      puts "Free space is over."
+    end  
+  end  
+end
 
 main = Main.new
 main.menu
