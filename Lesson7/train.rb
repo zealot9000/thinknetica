@@ -109,7 +109,11 @@ class Train
     else  
       puts "It's impossible. The train is moving or wagons left."
     end  
-  end  
+  end 
+
+  def take_a_block
+    @carriages.each {|carriage| yield(carriage)}
+  end 
 
   def self.find(number)
     @@trains_list[number]

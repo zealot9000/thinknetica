@@ -7,7 +7,7 @@ class Station
   
   attr_accessor :name, :list_trains
 
-  NAME_FORMAT = /^[a-zA-Zа-яА-Я0-9]$/
+  NAME_FORMAT = /^[a-zA-Z0-9]{2,10}$/
 
   @@station_list = []
 
@@ -24,6 +24,10 @@ class Station
       @@station_list
     end  
   end 
+
+  def take_a_block
+    @list_trains.each {|train| yield(train)}
+  end  
 
   def show_all_trains
     @@station_list.each {|train| puts "Train number: #{train.number}, train type: #{train.type}, train carriages: #{train.carriages}"}

@@ -1,8 +1,12 @@
 class CargoCarriage < Carriage
-  
+
+  attr_accessor :number
+
+  CARGO_UNITS = 6000
+
   def initialize 
-   @carriage_number = rand(1..1000)          
+   @number = rand(1..1000)          
    @type = :cargo
-   @number_of_units = @total_units = 6000
+   @number_of_units = @total_units = CARGO_UNITS
   end  
 end 
