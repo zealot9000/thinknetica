@@ -31,10 +31,3 @@ module Accessors
 end
 
 
-
-class Test
-  extend Accessors
-
-  attr_accessor_with_history :my_attr, :a, :b
-
-end
