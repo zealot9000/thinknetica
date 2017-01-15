@@ -1,12 +1,14 @@
 require_relative 'modules/instance_counter'
-require_relative 'modules/valid'
+require_relative 'modules/validation'
 
 class Station
   include InstanceCounter
-  include Valid
+  include Validation
 
   NAME_FORMAT = /^[a-zA-Z0-9]{2,10}$/
   @@station_list = []
+
+  validate :name, :presence
 
   attr_accessor :name, :list_trains
 
@@ -44,10 +46,10 @@ class Station
     @list_trains[train.type.to_sym].delete(train)
   end
 
-  protected
+  # protected
 
-  def validate!
-    raise 'Station Name should be longer than two characters.' if name.length < 2
-    raise 'Station name must consist of letters.' if name !~ NAME_FORMAT
-  end
+  # def validate!
+  #   raise 'Station Name should be longer than two characters.' if name.length < 2
+  #   raise 'Station name must consist of letters.' if name !~ NAME_FORMAT
+  # end
 end

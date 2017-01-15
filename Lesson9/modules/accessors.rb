@@ -29,5 +29,3 @@ module Accessors
     end          
   end  
 end
-
-

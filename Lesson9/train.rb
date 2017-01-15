@@ -1,16 +1,23 @@
 require_relative 'modules/instance_counter'
 require_relative 'modules/company'
-require_relative 'modules/valid'
+require_relative 'modules/validation'
+require_relative 'modules/accessors'
 
 class Train
   include InstanceCounter
   include Company
-  include Valid
+  include Validation
+  extend Accessors
 
   TRAIN_NUMBER = /^[a-zA-Z0-9]{3}.*\w{2}\z/i
   @@trains_list = {}
 
   attr_accessor :number, :type, :speed, :set_route, :moving_to_the_next_station, :route, :carriages
+  attr_accessor_with_history :a, :b
+  strong_attr_accessor(:thing, Fixnum)
+
+  validate :number, :format, TRAIN_NUMBER
+
 
   def self.find(number)
     @@trains_list[number]
@@ -123,7 +130,7 @@ class Train
 
   private
 
-  def validate!
-    raise 'Train number should be of the form (XXX-XX)' if number !~ TRAIN_NUMBER
-  end
+  # def validate!
+  #   raise 'Train number should be of the form (XXX-XX)' if number !~ TRAIN_NUMBER
+  # end
 end
