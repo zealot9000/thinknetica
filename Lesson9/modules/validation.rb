@@ -29,7 +29,7 @@ module Validation
           check_array.each do |value|
             var = instance_variable_get("@#{value[:attribute]}")
             method_checking = "#{value[:type]}"
-            send method_checking, var, value[:option] if value[:option]
+            send method_checking, var, value[:option] 
           end
         end
         our_class = our_class.superclass
